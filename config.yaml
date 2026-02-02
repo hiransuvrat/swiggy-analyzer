@@ -1,0 +1,43 @@
+# Swiggy Analyzer Configuration
+
+# Analysis settings
+analysis:
+  min_score: 50.0           # Minimum score threshold (0-100)
+  max_items: 20             # Maximum recommendations to show
+  weights:
+    frequency: 0.40         # Weight for purchase frequency
+    recency: 0.40           # Weight for recency/timing
+    quantity: 0.20          # Weight for quantity consistency
+
+# Data sync
+sync:
+  auto_sync: true           # Automatically sync before analysis
+  incremental_days: 30      # Days to fetch in incremental sync
+  full_sync_days: 365       # Days to fetch in full sync
+
+# Basket operations
+basket:
+  preview_required: true    # Always show preview before adding
+  auto_add: false           # Require confirmation before adding
+
+# Scheduling
+schedule:
+  enabled: false
+  hour: 9
+  minute: 0
+
+# Storage
+storage:
+  db_path: data/swiggy.db
+
+# Logging
+logging:
+  level: INFO               # DEBUG, INFO, WARNING, ERROR
+  file: logs/swiggy_analyzer.log
+
+# MCP settings
+mcp:
+  base_url: https://mcp.swiggy.com/im
+  timeout: 30
+  retry_attempts: 3
+  rate_limit: 100           # Max API calls per minute
