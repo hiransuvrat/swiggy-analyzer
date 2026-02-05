@@ -94,8 +94,9 @@ class ItemScorer:
         if not pattern.last_purchase_date or pattern.avg_days_between_purchases <= 0:
             return 50.0  # Neutral score if no pattern
 
-        # Days since last purchase
-        days_since = (datetime.now() - pattern.last_purchase_date).days
+        # Days since last purchase (handle timezone-aware datetimes)
+        now = datetime.now(pattern.last_purchase_date.tzinfo) if pattern.last_purchase_date.tzinfo else datetime.now()
+        days_since = (now - pattern.last_purchase_date).days
 
         # Expected interval
         expected_interval = pattern.avg_days_between_purchases
@@ -158,7 +159,8 @@ class ItemScorer:
 
         # Recency reasoning
         if pattern.last_purchase_date and pattern.avg_days_between_purchases > 0:
-            days_since = (datetime.now() - pattern.last_purchase_date).days
+            now = datetime.now(pattern.last_purchase_date.tzinfo) if pattern.last_purchase_date.tzinfo else datetime.now()
+            days_since = (now - pattern.last_purchase_date).days
             expected = pattern.avg_days_between_purchases
             ratio = days_since / expected
 
